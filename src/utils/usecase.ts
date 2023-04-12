@@ -68,7 +68,7 @@ export const getTransactionMethods = <
   contract: T,
   method: U,
   args: Parameters<T["functions"][U]>,
-  domain: string = ""
+  domain?: string
 ): TransactionMethods<ContractMethodReturnType<T, U>> => {
   const lastArg = args[args.length - 1];
 
@@ -85,7 +85,7 @@ export const getTransactionMethods = <
       method as string
     ](...[...args, mergedOverrides]);
 
-    const tag = getTagFromDomain(domain);
+    const tag = domain ? getTagFromDomain(domain) : "";
 
     populatedTransaction.data = populatedTransaction.data + tag;
     return populatedTransaction;
